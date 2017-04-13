@@ -48,7 +48,7 @@ const getWeatherAPI = coordinates => {
 
 const getWeather = event => {
   const data = JSON.parse(event.target.response);
-  const weather = new Weather(data.weather[0].id, data.main.temp, data.main.pressure, data.main.humidity, data.wind.speed, data.wind.deg, data.name);
+  const weather = new Weather(data.weather[0].description, data.main.temp, data.main.pressure, data.main.humidity, data.wind.speed, data.wind.deg, data.name);
   return weather;
 };
 
