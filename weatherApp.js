@@ -58,14 +58,14 @@ const setWeatherIcon = weatherID => {
   const weatherIcon = document.createElement("I");
         weatherIcon.className = weatherClassName;
         document.getElementById("weatherIcon").appendChild(weatherIcon);
-}
+};
 
 const setWindIcon = windDirection => {
   const windClassName = WIND_CLASS + windDirection + WIND_CLASS_COMPLEMENT;
   const windIcon = document.createElement("I");
         windIcon.className = windClassName;
         document.getElementById("windIcon").appendChild(windIcon);
-}
+};
 
 const setWeather = data => {
   setWeatherIcon(data.weatherID);
