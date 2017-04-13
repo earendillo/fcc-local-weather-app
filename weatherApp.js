@@ -6,19 +6,23 @@ const WEATHER_CLASS = "wi wi-owm-";
 const WIND_CLASS = "wi wi-wind from-";
 const WIND_CLASS_COMPLEMENT = "-deg";
 
-const Coordinates = function(latitude, longitude) {
-  this.latitude = latitude;
-  this.longitude = longitude;
+class Coordinates {
+  constructor(latitude, longitude) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 };
 
-const Weather = function(weatherID, temperature, pressure, humidity, windSpeed, windDirection, location) {
-  this.weatherID = weatherID;
-  this.temperature = temperature;
-  this.pressure = pressure;
-  this.humidity = humidity;
-  this.windSpeed = windSpeed;
-  this.windDirection = windDirection;
-  this.location = location;
+class Weather {
+  constructor(weatherID, temperature, pressure, humidity, windSpeed, windDirection, location) {
+    this.weatherID = weatherID;
+    this.temperature = temperature;
+    this.pressure = pressure;
+    this.humidity = humidity;
+    this.windSpeed = windSpeed;
+    this.windDirection = windDirection;
+    this.location = location;
+  }
 };
 
 const request = (method, url) => {
@@ -58,14 +62,14 @@ const setWeatherIcon = weatherID => {
   const weatherIcon = document.createElement("I");
         weatherIcon.className = weatherClassName;
         document.getElementById("weatherIcon").appendChild(weatherIcon);
-};
+}
 
 const setWindIcon = windDirection => {
   const windClassName = WIND_CLASS + windDirection + WIND_CLASS_COMPLEMENT;
   const windIcon = document.createElement("I");
         windIcon.className = windClassName;
         document.getElementById("windIcon").appendChild(windIcon);
-};
+}
 
 const setWeather = data => {
   setWeatherIcon(data.weatherID);
