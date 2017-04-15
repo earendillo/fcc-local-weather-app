@@ -2,9 +2,8 @@
 
 const COORDINATES_API = "http://ip-api.com/json";
 const WEATHER_API_KEY = "3da6a7c77deb9c2ba46c840f36a5dc0f";
-const WEATHER_CLASS = "wi wi-owm-";
-const WIND_CLASS = "wi wi-wind from-";
-const WIND_CLASS_COMPLEMENT = "-deg";
+
+
 
 class Coordinates {
   constructor(latitude, longitude) {
@@ -14,8 +13,9 @@ class Coordinates {
 };
 
 class Weather {
-  constructor(weatherID, temperature, pressure, humidity, windSpeed, windDirection, location) {
+  constructor(weatherID, weatherDescription, temperature, pressure, humidity, windSpeed, windDirection, location) {
     this.weatherID = weatherID;
+    this.weatherDescription = weatherDescription;
     this.temperature = temperature;
     this.pressure = pressure;
     this.humidity = humidity;
@@ -23,6 +23,27 @@ class Weather {
     this.windDirection = windDirection;
     this.location = location;
   }
+
+  convertTemperature() {
+    return (this.temperature - 273).toFixed(1);
+  };
+
+  setWeatherIcon() {
+    const WEATHER_CLASS = "wi wi-owm-";
+    const weatherClassName = WEATHER_CLASS + this.weatherID;
+    const weatherIcon = document.createElement("I");
+          weatherIcon.className = weatherClassName;
+          document.getElementById("weatherIcon").appendChild(weatherIcon);
+  };
+
+  setWindIcon() {
+    const WIND_CLASS = "wi wi-wind from-";
+    const WIND_CLASS_COMPLEMENT = "-deg";
+    const windClassName = WIND_CLASS + this.windDirection + WIND_CLASS_COMPLEMENT;
+    const windIcon = document.createElement("I");
+          windIcon.className = windClassName;
+          document.getElementById("windIcon").appendChild(windIcon);
+  };
 };
 
 const request = (method, url) => {
@@ -35,7 +56,7 @@ const request = (method, url) => {
   });
 };
 
-const getCoordinates = event => {
+const getCoordinates = (event) => {
   const data = JSON.parse(event.target.response);
   const coordinates = new Coordinates(data.lat, data.lon);
   return coordinates;
@@ -46,38 +67,18 @@ const getWeatherAPI = coordinates => {
   return request('GET', WEATHER_API);
 };
 
-const getWeather = event => {
+const getWeather = (event) => {
   const data = JSON.parse(event.target.response);
-  const weather = new Weather(data.weather[0].description, data.main.temp, data.main.pressure, data.main.humidity, data.wind.speed, data.wind.deg, data.name);
+  const weather = new Weather(data.weather[0].id, data.weather[0].description, data.main.temp, data.main.pressure, data.main.humidity, data.wind.speed, data.wind.deg, data.name);
   return weather;
 };
 
-const convertTemperature = temperature => {
-  const convertedTemperature = (temperature - 273).toFixed(1);
-  return convertedTemperature;
-};
-
-const setWeatherIcon = weatherID => {
-  const weatherClassName = WEATHER_CLASS + weatherID;
-  const weatherIcon = document.createElement("I");
-        weatherIcon.className = weatherClassName;
-        document.getElementById("weatherIcon").appendChild(weatherIcon);
-};
-
-const setWindIcon = windDirection => {
-  const windClassName = WIND_CLASS + windDirection + WIND_CLASS_COMPLEMENT;
-  const windIcon = document.createElement("I");
-        windIcon.className = windClassName;
-        document.getElementById("windIcon").appendChild(windIcon);
-};
-
-const setWeather = data => {
-  setWeatherIcon(data.weatherID);
-  setWindIcon(data.windDirection);
-  const temperature = convertTemperature(data.temperature);
+const setWeather = (data) => {
+  data.setWeatherIcon();
+  data.setWindIcon();
   document.getElementById("city").innerHTML = data.location;
-  document.getElementById("weatherID").innerHTML = data.weatherID;
-  document.getElementById("temp").innerHTML = temperature;
+  document.getElementById("weatherID").innerHTML = data.weatherDescription;
+  document.getElementById("temp").innerHTML = data.convertTemperature();
   document.getElementById("press").innerHTML = data.pressure;
   document.getElementById("humid").innerHTML = data.humidity;
   document.getElementById("windSpeed").innerHTML = data.windSpeed;
