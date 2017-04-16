@@ -3,8 +3,6 @@
 const COORDINATES_API = "http://ip-api.com/json";
 const WEATHER_API_KEY = "3da6a7c77deb9c2ba46c840f36a5dc0f";
 
-
-
 class Coordinates {
   constructor(latitude, longitude) {
     this.latitude = latitude;
@@ -13,15 +11,15 @@ class Coordinates {
 };
 
 class Weather {
-  constructor(weatherID, weatherDescription, temperature, pressure, humidity, windSpeed, windDirection, location) {
-    this.weatherID = weatherID;
-    this.weatherDescription = weatherDescription;
-    this.temperature = temperature;
-    this.pressure = pressure;
-    this.humidity = humidity;
-    this.windSpeed = windSpeed;
-    this.windDirection = windDirection;
-    this.location = location;
+  constructor(weather) {
+    this._ID = weather._ID;
+    this.description = weather.description;
+    this.temperature = weather.temperature;
+    this.pressure = weather.pressure;
+    this.humidity = weather.humidity;
+    this.windSpeed = weather.windSpeed;
+    this.windDirection = weather.windDirection;
+    this.location = weather.location;
   }
 
   convertTemperature() {
@@ -30,7 +28,7 @@ class Weather {
 
   setWeatherIcon() {
     const WEATHER_CLASS = "wi wi-owm-";
-    const weatherClassName = WEATHER_CLASS + this.weatherID;
+    const weatherClassName = WEATHER_CLASS + this._ID;
     const weatherIcon = document.createElement("I");
           weatherIcon.className = weatherClassName;
           document.getElementById("weatherIcon").appendChild(weatherIcon);
@@ -69,15 +67,27 @@ const getWeatherAPI = coordinates => {
 
 const getWeather = (event) => {
   const data = JSON.parse(event.target.response);
-  const weather = new Weather(data.weather[0].id, data.weather[0].description, data.main.temp, data.main.pressure, data.main.humidity, data.wind.speed, data.wind.deg, data.name);
-  return weather;
+  console.log(data);
+  const weather = {
+    _ID: data.weather[0].id,
+    description: data.weather[0].description,
+    temperature: data.main.temp,
+    pressure: data.main.pressure,
+    humidity: data.main.humidity,
+    windSpeed: data.wind.speed,
+    windDirection: data.wind.deg,
+    location: data.name
+  }
+  console.log(weather);
+  return new Weather(weather);
 };
 
 const setWeather = (data) => {
+  console.log(data);
   data.setWeatherIcon();
   data.setWindIcon();
   document.getElementById("city").innerHTML = data.location;
-  document.getElementById("weatherID").innerHTML = data.weatherDescription;
+  document.getElementById("weatherID").innerHTML = data.description;
   document.getElementById("temp").innerHTML = data.convertTemperature();
   document.getElementById("press").innerHTML = data.pressure;
   document.getElementById("humid").innerHTML = data.humidity;
