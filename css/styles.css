@@ -1,3 +1,62 @@
+* {
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Muli', sans-serif;
+
+}
+
 i {
   font-size: 30px; font-size: 6vw;
+}
+
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temp {
+  font-size: 3.5em;
+}
+
+.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-app {
+  background-color: #e6af4b;
+  border-radius: 15px;
+  padding: 15px;
+  width: 360px;
+}
+
+.weather-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.deb {
+  border: 3px #00FF00 solid;
 }
