@@ -6,14 +6,12 @@
 
 body {
   font-family: 'Muli', sans-serif;
-
+  color: #FFF2DA;
 }
 
 i {
-  font-size: 30px; font-size: 6vw;
+  font-size: 2em;
 }
-
-
 
 .container {
   display: flex;
@@ -21,21 +19,25 @@ i {
   align-items: center;
 }
 
-.temp {
-  font-size: 3.5em;
+.humid {
+  font-size: 1em;
 }
 
 .section {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  padding: 3px;
+}
+
+.temp {
+  font-size: 3.5em;
 }
 
 .weather-app {
   background-color: #e6af4b;
   border-radius: 15px;
-  padding: 15px;
-  width: 360px;
+  width: 250px;
 }
 
 .weather-data {
@@ -43,6 +45,10 @@ i {
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+}
+
+.wind {
+  font-size: 0.8em;
 }
 
 
@@ -58,5 +64,5 @@ i {
 
 
 .deb {
-  border: 3px #00FF00 solid;
+  border: 1px #00FF00 solid;
 }
